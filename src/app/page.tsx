@@ -1,65 +1,66 @@
+import { Heart } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import FloatingLines from "@/components/floating-lines";
+import RotatingText from "@/components/rotating-text";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    return (
+        <div className="h-screen supports-[height:100dvh]:h-dvh overflow-hidden flex justify-center items-center dark bg-background text-foreground text-shadow-[0_0_6px_rgb(0,0,0,1)]">
+            <div className="absolute size-full brightness-60">
+                <FloatingLines enabledWaves={["top", "middle", "bottom"]} lineCount={[15, 10, 15]} lineDistance={[8, 6, 4]} bendRadius={0} bendStrength={0} interactive={true} parallax={true} />
+            </div>
+            <header className="z-10 fixed top-4">
+                <h2 className="inline-flex items-center gap-2 font-bold text-3xl">
+                    <Image src="/HearMeOut_Logo.svg" alt="HearMeOut logo" width={32} height={32} priority />
+                    <span>HearMeOut</span>
+                </h2>
+            </header>
+            <main className="z-10 w-full max-w-4xl p-4 flex flex-col items-center gap-8 text-center">
+                <div className="flex flex-col gap-4">
+                    <h1 className="flex flex-wrap items-center justify-center gap-2 font-black text-4xl sm:text-5xl">
+                        <span>Your Music Taste,</span>
+                        <RotatingText
+                            texts={["Visualized", "Discovered", "Shared", "Celebrated!"]}
+                            mainClassName="bg-primary text-primary-foreground justify-center rounded-lg overflow-hidden"
+                            staggerFrom="last"
+                            staggerDuration={0.025}
+                            splitLevelClassName="overflow-hidden p-2"
+                            transition={{ type: "spring", damping: 35, stiffness: 400 }}
+                            rotationInterval={4000}
+                            animatePresenceMode="popLayout"
+                        />
+                    </h1>
+                    <p className="flex flex-col text-md sm:text-2xl font-semibold text-balance leading-tight">
+                        <span>
+                            <span className="font-black">Top Songs</span> & <span className="font-black">Favourite Artists</span> <span className="italic">brought to life!</span>
+                        </span>
+                        <span className="italic">Share them and let your friends judge you</span>
+                    </p>
+                </div>
+                <Button size="lg" className="font-bold rounded-full text-lg py-6 bg-spotify-green hover:bg-spotify-green/90 text-shadow-[0_0_6px_rgb(0,0,0,0.5)] shadow-xl hover:shadow-2xl hover:scale-[1.04] active:scale-[0.98] transition-transform duration-150">
+                    <Image className="size-6 drop-shadow-[0_0_6px_rgb(0,0,0,0.5)]" src="/Spotify_Logo.svg" alt="Spotify logo" width={32} height={32} priority />
+                    Connect with Spotify
+                </Button>
+            </main>
+            <footer className="z-10 fixed bottom-4">
+                <div className="flex flex-col items-center gap-1 text-xs font-medium">
+                    <div className="flex items-center gap-1">
+                        Made with <Heart className="fill-primary stroke-none size-4" /> by
+                        <a href="https://github.com/theSaintKappa" target="_blank" rel="noopener noreferrer">
+                            Wojtek
+                        </a>
+                    </div>
+                    <div className="space-x-2">
+                        <span>Not affiliated with Spotify</span>
+                        <span className="font-black">&bull;</span>
+                        <Link className="text-primary hover:underline" href="/privacy">
+                            Privacy Policy
+                        </Link>
+                    </div>
+                </div>
+            </footer>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+    );
 }
