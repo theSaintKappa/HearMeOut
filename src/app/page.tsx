@@ -3,7 +3,9 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import FloatingLines from "@/components/floating-lines";
+import { OAuthErrorHandler } from "@/components/oauth-error-handler";
 import RotatingText from "@/components/rotating-text";
 import { SignInButton } from "@/components/sign-in-button";
 import { auth } from "@/lib/auth";
@@ -64,6 +66,9 @@ export default async function Home() {
                     </div>
                 </div>
             </footer>
+            <Suspense>
+                <OAuthErrorHandler />
+            </Suspense>
         </div>
     );
 }
