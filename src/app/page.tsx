@@ -1,11 +1,17 @@
 import { Heart } from "lucide-react";
+import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import FloatingLines from "@/components/floating-lines";
 import RotatingText from "@/components/rotating-text";
-import { Button } from "@/components/ui/button";
+import { SignInButton } from "@/components/sign-in-button";
+import { auth } from "@/lib/auth";
 
-export default function Home() {
+export default async function Home() {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (session) redirect("/me");
+
     return (
         <div className="h-screen supports-[height:100dvh]:h-dvh overflow-hidden flex justify-center items-center dark bg-background text-foreground text-shadow-[0_0_6px_rgb(0,0,0,1)]">
             <div className="absolute size-full brightness-60">
@@ -39,10 +45,7 @@ export default function Home() {
                         <span className="italic">Share them and let your friends judge you</span>
                     </p>
                 </div>
-                <Button size="lg" className="font-bold rounded-full text-lg py-6 bg-spotify-green hover:bg-spotify-green/90 text-shadow-[0_0_6px_rgb(0,0,0,0.5)] shadow-xl hover:shadow-2xl hover:scale-[1.04] active:scale-[0.98] transition-transform duration-150">
-                    <Image className="size-6 drop-shadow-[0_0_6px_rgb(0,0,0,0.5)]" src="/Spotify_Logo.svg" alt="Spotify logo" width={32} height={32} priority />
-                    Connect with Spotify
-                </Button>
+                <SignInButton />
             </main>
             <footer className="z-10 fixed bottom-4">
                 <div className="flex flex-col items-center gap-1 text-xs font-medium">
