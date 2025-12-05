@@ -241,7 +241,7 @@ function hexToVec3(hex: string): Vector3 {
     return new Vector3(r / 255, g / 255, b / 255);
 }
 
-export default function FloatingLines({
+export function FloatingLines({
     linesGradient,
     enabledWaves = ["top", "middle", "bottom"],
     lineCount = [6],

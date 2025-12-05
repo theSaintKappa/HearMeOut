@@ -40,7 +40,7 @@ function splitIntoCharacters(text: string): string[] {
     return Array.from(text);
 }
 
-const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
+export const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
     (
         {
             texts,
@@ -204,6 +204,3 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
         );
     },
 );
-
-RotatingText.displayName = "RotatingText";
-export default RotatingText;

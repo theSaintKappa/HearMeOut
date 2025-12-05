@@ -4,11 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import FloatingLines from "@/components/floating-lines";
-import { OAuthErrorHandler } from "@/components/oauth-error-handler";
-import RotatingText from "@/components/rotating-text";
-import { SignInButton } from "@/components/sign-in-button";
 import { auth } from "@/lib/auth";
+import { FloatingLines } from "./floating-lines";
+import { OAuthErrorHandler } from "./oauth-error-handler";
+import { RotatingText } from "./rotating-text";
+import { SignInButton } from "./sign-in-button";
 
 export default async function Home() {
     const session = await auth.api.getSession({ headers: await headers() });
@@ -20,14 +20,14 @@ export default async function Home() {
                 <FloatingLines enabledWaves={["top", "middle", "bottom"]} lineCount={[15, 10, 15]} lineDistance={[8, 6, 4]} bendRadius={0} bendStrength={0} interactive={true} parallax={true} />
             </div>
             <header className="z-10 fixed top-4">
-                <h2 className="inline-flex items-center gap-2 font-bold text-3xl">
+                <div className="flex items-center gap-2">
                     <Image src="/HearMeOut_Logo.svg" alt="HearMeOut logo" width={32} height={32} priority />
-                    <span>HearMeOut</span>
-                </h2>
+                    <h1 className="font-black text-3xl">HearMeOut</h1>
+                </div>
             </header>
             <main className="z-10 w-full max-w-4xl p-4 flex flex-col items-center gap-8 text-center">
                 <div className="flex flex-col gap-4">
-                    <h1 className="flex flex-wrap items-center justify-center gap-2 font-black text-4xl sm:text-5xl">
+                    <h2 className="flex flex-wrap items-center justify-center gap-2 font-black text-4xl sm:text-5xl">
                         <span>Your Music Taste,</span>
                         <RotatingText
                             texts={["Visualized", "Discovered", "Shared", "Celebrated!"]}
@@ -39,7 +39,7 @@ export default async function Home() {
                             rotationInterval={4000}
                             animatePresenceMode="popLayout"
                         />
-                    </h1>
+                    </h2>
                     <p className="flex flex-col text-md sm:text-2xl font-semibold text-balance leading-tight">
                         <span>
                             <span className="font-black">Top Songs</span> & <span className="font-black">Favourite Artists</span> <span className="italic">brought to life!</span>
