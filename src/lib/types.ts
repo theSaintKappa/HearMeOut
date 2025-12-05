@@ -1,0 +1,73 @@
+import type { Artist as SpotifyArtist, Page as SpotifyPage, Track as SpotifyTrack } from "@spotify/web-api-ts-sdk";
+import type { SpotifyProfile } from "better-auth/social-providers";
+
+// Response types for Spotify API calls
+export interface SpotifyTopItemsResponse<T extends "artists" | "tracks"> extends SpotifyPage<T extends "artists" ? SpotifyArtist : SpotifyTrack> {}
+
+// Response types for internal API calls
+export type TopItemsResponse<T extends "artists" | "tracks"> = {
+    limit: number;
+    offset: number;
+    total: number;
+    nextOffset: number | null;
+} & Record<T, T extends "artists" ? Artist[] : Track[]>;
+
+// Common types
+
+export interface ExtendedProfile extends SpotifyProfile {
+    country: string;
+    external_urls: { spotify: string };
+    uri: string;
+    followers: { total: number };
+    product: string;
+}
+
+export type TopType = "artists" | "tracks";
+export type TimeRange = "short_term" | "medium_term" | "long_term";
+
+export type AlbumType = "album" | "single" | "compilation";
+export type ReleaseDatePrecision = "year" | "month" | "day";
+
+interface Image {
+    url: string;
+    height: number | null;
+    width: number | null;
+}
+
+interface SimplifiedArtist {
+    url: string;
+    name: string;
+    uri: string;
+}
+
+export type TopItems<T extends TopType> = T extends "tracks" ? Track[] : Artist[];
+
+export interface Track {
+    album: {
+        albumType: AlbumType;
+        url: string;
+        images: Image[];
+        name: string;
+        releaseDate: string;
+        releaseDatePrecision: ReleaseDatePrecision;
+        uri: string;
+        artists: SimplifiedArtist[];
+    };
+    artists: SimplifiedArtist[];
+    durationMs: number;
+    explicit: boolean;
+    url: string;
+    name: string;
+    popularity: number;
+    uri: string;
+}
+
+export interface Artist {
+    url: string;
+    followers: number;
+    genres: string[];
+    images: Image[];
+    name: string;
+    popularity: number;
+    uri: string;
+}
