@@ -22,8 +22,10 @@ export interface ExtendedProfile extends SpotifyProfile {
     product: string;
 }
 
-export type TopType = "artists" | "tracks";
+export type ItemType = "artists" | "tracks";
 export type TimeRange = "short_term" | "medium_term" | "long_term";
+
+export type ViewMode = "grid" | "list";
 
 export type AlbumType = "album" | "single" | "compilation";
 export type ReleaseDatePrecision = "year" | "month" | "day";
@@ -40,7 +42,7 @@ interface SimplifiedArtist {
     uri: string;
 }
 
-export type TopItems<T extends TopType> = T extends "tracks" ? Track[] : Artist[];
+export type TopItems<T extends ItemType> = T extends "tracks" ? Track[] : Artist[];
 
 export interface Track {
     album: {
