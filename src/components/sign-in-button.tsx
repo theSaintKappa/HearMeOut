@@ -11,11 +11,7 @@ export function SignInButton() {
 
     const signIn = async () => {
         setIsSigningIn(true);
-        await authClient.signIn.social({
-            provider: "spotify",
-            callbackURL: "/me",
-            errorCallbackURL: "/",
-        });
+        await authClient.signIn.social({ provider: "spotify", callbackURL: "/me", errorCallbackURL: "/" });
     };
 
     return (

@@ -16,6 +16,11 @@ model User {
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  country       String?
+  url           String?
+  uri           String?
+  followers     Int?
+  product       String?
   sessions      Session[]
   accounts      Account[]
 
