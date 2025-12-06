@@ -1,12 +1,12 @@
 import { create } from "zustand";
-import type { ItemType, TimeRange, TopItems, ViewMode } from "@/lib/types";
+import type { ContentType, TimeRange, TopItems, ViewMode } from "@/lib/types";
 
-interface HMOStore extends Record<ItemType, Record<TimeRange, TopItems<ItemType>>> {
-    contentType: ItemType;
+interface HMOStore extends Record<ContentType, Record<TimeRange, TopItems<ContentType>>> {
+    contentType: ContentType;
     timeRange: TimeRange;
     viewMode: ViewMode;
-    setTopItems: <T extends ItemType>(type: T, range: TimeRange, items: TopItems<T>) => void;
-    setContentType: (type: ItemType) => void;
+    setTopItems: <T extends ContentType>(type: T, range: TimeRange, items: TopItems<T>) => void;
+    setContentType: (type: ContentType) => void;
     setTimeRange: (range: TimeRange) => void;
     setViewMode: (mode: ViewMode) => void;
 }
