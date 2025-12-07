@@ -11,7 +11,9 @@ export default async function Page() {
     return (
         <main className="space-y-4 max-w-7xl mx-auto p-4">
             <ContentSelectors />
-            <CollectionView />
+            <section className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(185px,1fr))]">
+                <CollectionView />
+            </section>
         </main>
     );
 }

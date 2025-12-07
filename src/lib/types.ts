@@ -1,18 +1,15 @@
 import type { Artist as SpotifyArtist, Page as SpotifyPage, Track as SpotifyTrack } from "@spotify/web-api-ts-sdk";
 import type { SpotifyProfile } from "better-auth/social-providers";
 
-// Response types for Spotify API calls
-export interface SpotifyTopItemsResponse<T extends "artists" | "tracks"> extends SpotifyPage<T extends "artists" ? SpotifyArtist : SpotifyTrack> {}
+export interface SpotifyTopItemsResponse<T extends ContentType> extends SpotifyPage<T extends "artists" ? SpotifyArtist : SpotifyTrack> {}
 
-// Response types for internal API calls
-export type TopItemsResponse<T extends "artists" | "tracks"> = {
+type TopItemsPagination = {
     limit: number;
     offset: number;
     total: number;
     nextOffset: number | null;
-} & Record<T, T extends "artists" ? Artist[] : Track[]>;
-
-// Common types
+};
+export type TopItemsResponse = (TopItemsPagination & { contentType: "tracks"; items: Track[] }) | (TopItemsPagination & { contentType: "artists"; items: Artist[] });
 
 export interface ExtendedProfile extends SpotifyProfile {
     country: string;

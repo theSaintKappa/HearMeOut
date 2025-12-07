@@ -40,10 +40,10 @@ export function Header() {
                                 <span className="sr-only">Settings</span>
                             </Button>
                         </PopoverTrigger>
-                        <PopoverContent></PopoverContent>
+                        <PopoverContent>settings</PopoverContent>
                     </Popover>
                     <Popover>
-                        <PopoverTrigger className="cursor-pointer h-full">
+                        <PopoverTrigger className="cursor-pointer h-full rounded-full outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]">
                             <Avatar className="border-2 border-primary p-0.5 h-full w-auto aspect-square">
                                 <AvatarImage className="rounded-full" src={session?.user.image ?? undefined} alt="User avatar" />
                                 <AvatarFallback>
