@@ -70,3 +70,9 @@ export interface Artist {
     popularity: number;
     uri: string;
 }
+
+export interface TopEntryProps<T extends ContentType> {
+    type: T;
+    data: T extends "tracks" ? Track : Artist;
+    index: number;
+}
