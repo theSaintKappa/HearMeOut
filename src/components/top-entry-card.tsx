@@ -21,7 +21,7 @@ export function TopEntryCard<T extends ContentType>({ type, data, index }: TopEn
                     </motion.div>
                 </div>
                 <div className="flex-1 flex flex-col justify-center sm:text-center text-start sm:p-0 p-2 min-h-[2lh]">
-                    <h3 className={cn("font-bold sm:text-sm text-xs", subtitle ? "truncate" : "line-clamp-2")}>{title}</h3>
+                    <h4 className={cn("font-bold sm:text-sm text-xs", subtitle ? "truncate" : "line-clamp-2")}>{title}</h4>
                     <p className="text-xs text-muted-foreground truncate">{subtitle}</p>
                 </div>
             </div>

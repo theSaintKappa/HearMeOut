@@ -31,7 +31,7 @@ export function TopEntryListItem<T extends ContentType>({ type, data, index }: T
                     </motion.div>
                 </div>
                 <div className="min-w-0">
-                    <h3 className="font-bold text-sm truncate">{track.name}</h3>
+                    <h4 className="font-bold text-sm truncate">{track.name}</h4>
                     <p className="text-xs text-muted-foreground truncate">{track.artists.map((artist) => artist.name).join(", ")}</p>
                 </div>
                 <div className="min-w-0 hidden md:block">
@@ -76,7 +76,7 @@ export function TopEntryListItem<T extends ContentType>({ type, data, index }: T
                 </motion.div>
             </div>
             <div className="min-w-0">
-                <h3 className="font-bold text-sm truncate">{artist.name}</h3>
+                <h4 className="font-bold text-sm truncate">{artist.name}</h4>
                 <p className="text-xs text-muted-foreground truncate">{artist.genres.join(", ")}</p>
             </div>
             <div className="hidden md:flex gap-6">

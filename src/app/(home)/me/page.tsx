@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { CollectionView } from "@/components/collection-view";
-import { ContentSelectors } from "@/components/content-selectors";
+import { ContentFilters } from "@/components/content-filters";
 import { auth } from "@/lib/auth";
 
 export default async function Page() {
@@ -10,7 +10,7 @@ export default async function Page() {
 
     return (
         <main className="max-w-7xl mx-auto sm:p-4 p-2 sm:space-y-4 space-y-3">
-            <ContentSelectors />
+            <ContentFilters />
             <CollectionView />
         </main>
     );
