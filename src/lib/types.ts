@@ -27,6 +27,9 @@ export type ViewMode = "grid" | "list";
 export type AlbumType = "album" | "single" | "compilation";
 export type ReleaseDatePrecision = "year" | "month" | "day";
 
+export const PRIMARY_APP_COLORS = ["violet", "blue", "green", "yellow", "orange", "rose", "red", "default"] as const;
+export type PrimaryAppColor = (typeof PRIMARY_APP_COLORS)[number];
+
 interface Image {
     url: string;
     height: number | null;

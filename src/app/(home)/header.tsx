@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect, usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
+import { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,8 @@ import { Separator } from "@/components/ui/separator";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { authClient } from "@/lib/auth-client";
 import { useSettingsStore } from "@/lib/store";
-import type { ViewMode } from "@/lib/types";
+import { PRIMARY_APP_COLORS, type PrimaryAppColor, type ViewMode } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 export function Header() {
     return (
@@ -33,8 +35,13 @@ export function Header() {
 }
 
 function SettingsPopover() {
-    const { viewMode, primaryColor, setViewMode, setPrimaryColor } = useSettingsStore();
-    const { theme, setTheme } = useTheme();
+    const { viewMode, primaryAppColor, setViewMode, setPrimaryColor } = useSettingsStore();
+    const { theme, setTheme, resolvedTheme } = useTheme();
+
+    useEffect(() => {
+        document.documentElement.classList.remove(...PRIMARY_APP_COLORS);
+        document.documentElement.classList.add(primaryAppColor);
+    }, [primaryAppColor]);
 
     return (
         <Popover>
@@ -64,17 +71,16 @@ function SettingsPopover() {
                 </div>
                 <Separator />
                 <div className="flex flex-col gap-2 p-4">
-                    <h3 className="font-medium">Accent Color</h3>
-                    <ToggleGroup variant="outline" spacing={2} type="single" size="sm" value={primaryColor} onValueChange={(value: string | "") => value !== "" && setPrimaryColor(value)} disabled>
-                        <ToggleGroupItem className="group relative size-8 p-0 overflow-hidden rounded-full" value="purple">
-                            <div className="inset-0 size-full bg-red-500" />
-                            <Check className="absolute hidden stroke-3 drop-shadow-[0_0_1px_black] group-data-[state=on]:block" />
-                        </ToggleGroupItem>
-                        <ToggleGroupItem className="group relative size-8 p-0 overflow-hidden rounded-full" value="green">
-                            <div className="inset-0 size-full bg-green-500" />
-                            <Check className="absolute hidden stroke-3 drop-shadow-[0_0_1px_black] group-data-[state=on]:block" />
-                        </ToggleGroupItem>
+                    <h3 className="font-medium">Primary App Color</h3>
+                    <ToggleGroup variant="outline" spacing={2} type="single" size="sm" value={primaryAppColor} onValueChange={(value: PrimaryAppColor | "") => value !== "" && setPrimaryColor(value)}>
+                        {PRIMARY_APP_COLORS.map((color) => (
+                            <ToggleGroupItem key={color} className="group relative size-8 p-0 overflow-hidden rounded-full" value={color}>
+                                <div className={cn("inset-0 size-full bg-primary", color, resolvedTheme)} />
+                                <Check className="absolute hidden stroke-3 stroke-white drop-shadow-[0_0_1px_black] group-data-[state=on]:block" />
+                            </ToggleGroupItem>
+                        ))}
                     </ToggleGroup>
+                    <p className="capitalize text-muted-foreground text-sm">{primaryAppColor}</p>
                 </div>
                 <Separator />
                 <div className="flex flex-col gap-2 p-4">

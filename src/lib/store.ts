@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { ContentType, TimeRange, ViewMode } from "@/lib/types";
+import type { ContentType, PrimaryAppColor, TimeRange, ViewMode } from "@/lib/types";
 
 interface HMOStore {
     contentType: ContentType;
@@ -18,18 +18,18 @@ export const useHMOStore = create<HMOStore>((set) => ({
 
 interface SettingsStore {
     viewMode: ViewMode;
-    primaryColor: string;
+    primaryAppColor: PrimaryAppColor;
     setViewMode: (mode: ViewMode) => void;
-    setPrimaryColor: (color: string) => void;
+    setPrimaryColor: (color: PrimaryAppColor) => void;
 }
 
 export const useSettingsStore = create<SettingsStore>()(
     persist(
         (set) => ({
             viewMode: "grid",
-            primaryColor: "purple",
+            primaryAppColor: "violet",
             setViewMode: (mode) => set({ viewMode: mode }),
-            setPrimaryColor: (color) => set({ primaryColor: color }),
+            setPrimaryColor: (color) => set({ primaryAppColor: color }),
         }),
         { name: "hmo-settings" },
     ),

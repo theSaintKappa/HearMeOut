@@ -5,7 +5,7 @@ import { AnimatePresence, LayoutGroup, motion } from "motion/react";
 import { useEffect, useMemo, useRef } from "react";
 import { toast } from "sonner";
 import useSWRInfinite from "swr/infinite";
-import { useHMOStore } from "@/lib/store";
+import { useHMOStore, useSettingsStore } from "@/lib/store";
 import type { Artist, ContentType, TopItemsResponse, Track } from "@/lib/types";
 import { TopEntryCard } from "./top-entry-card";
 import { TopEntryListItem } from "./top-entry-list-item";
@@ -22,7 +22,8 @@ const fetcher = async (url: string) => {
 };
 
 export function CollectionView() {
-    const { contentType, timeRange, viewMode } = useHMOStore();
+    const { contentType, timeRange } = useHMOStore();
+    const { viewMode } = useSettingsStore();
     const prevContentTypeRef = useRef<ContentType>(contentType);
     const prevTimeRangeRef = useRef(timeRange);
     const prevViewModeRef = useRef(viewMode);
