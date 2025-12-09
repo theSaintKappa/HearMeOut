@@ -72,7 +72,7 @@ export function CollectionView() {
         if (error) toast.error(`Failed to load top ${contentType}`, { description: (error.cause ? (error.cause as { error: string }).error : error.message) || undefined });
     }, [error, contentType]);
 
-    const gridClassName = viewMode === "grid" ? "grid gap-4 grid-cols-[repeat(auto-fit,minmax(185px,1fr))] list-none" : "flex flex-col gap-2 list-none";
+    const gridClassName = viewMode === "grid" ? "grid sm:gap-4 gap-2 sm:grid-cols-[repeat(auto-fit,minmax(185px,1fr))] grid-cols-3 list-none" : "flex flex-col gap-2 list-none";
 
     return (
         <AnimatePresence mode="popLayout" initial={false}>
