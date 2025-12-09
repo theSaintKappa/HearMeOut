@@ -13,7 +13,7 @@ const toggleVariants = cva(
       variant: {
         default: "data-[state=on]:bg-primary",
         outline: "bg-muted/50 data-[state=on]:bg-primary/15 border border-muted data-[state=on]:border-primary shadow-xs data-[state=on]:text-foreground",
-        ghost: "data-[state=on]:bg-card data-[state=on]:text-foreground data-[state=on]:ring-1 data-[state=on]:ring-border",
+        ghost: "data-[state=on]:bg-muted-foreground/8 data-[state=on]:text-foreground data-[state=on]:ring-1 data-[state=on]:ring-border",
       },
       size: {
         default: "h-9 px-2 min-w-9",

@@ -23,7 +23,10 @@ export function TopEntryListItem<T extends ContentType>({ type, data, index }: T
     if (type === "tracks") {
         const track = data as Track;
         return (
-            <button className="grid md:grid-cols-[auto_auto_2fr_1fr_auto] grid-cols-[auto_auto_1fr] py-2 px-4 gap-4 items-center bg-card/50 rounded-md border outline-none cursor-pointer group hover:bg-card focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] w-full text-left" type="button">
+            <button
+                className="grid md:grid-cols-[auto_auto_2fr_1fr_auto] grid-cols-[auto_auto_1fr] py-2 px-4 gap-4 items-center bg-muted-foreground/8 rounded-md border outline-none cursor-pointer group hover:bg-muted-foreground/16 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] w-full text-left"
+                type="button"
+            >
                 <span className="text-sm font-black font-mono text-muted-foreground">{index + 1}</span>
                 <div className="overflow-hidden rounded-[3px] bg-muted">
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: isLoaded ? 1 : 0 }} transition={{ duration: 0.25 }}>
@@ -54,7 +57,7 @@ export function TopEntryListItem<T extends ContentType>({ type, data, index }: T
                         <TooltipTrigger asChild>
                             <div className="text-muted-foreground flex items-center gap-1">
                                 <Stars className="size-4" />
-                                <span className="text-sm">{track.popularity}/100</span>
+                                <span className="text-sm font-mono">{track.popularity}/100</span>
                             </div>
                         </TooltipTrigger>
                         <TooltipContent>
@@ -68,7 +71,10 @@ export function TopEntryListItem<T extends ContentType>({ type, data, index }: T
 
     const artist = data as Artist;
     return (
-        <button className="grid md:grid-cols-[auto_auto_1fr_auto] grid-cols-[auto_auto_1fr] py-2 px-4 gap-4 items-center bg-card/50 rounded-md border outline-none cursor-pointer group hover:bg-card focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] w-full text-left" type="button">
+        <button
+            className="grid md:grid-cols-[auto_auto_1fr_auto] grid-cols-[auto_auto_1fr] py-2 px-4 gap-4 items-center bg-muted-foreground/8 rounded-md border outline-none cursor-pointer group hover:bg-muted-foreground/16 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] w-full text-left"
+            type="button"
+        >
             <span className="text-sm font-black font-mono text-muted-foreground">{index + 1}</span>
             <div className="overflow-hidden rounded-full bg-muted">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: isLoaded ? 1 : 0 }} transition={{ duration: 0.25 }}>

@@ -88,7 +88,7 @@ export function CollectionView() {
                                 key={item.uri}
                                 layout={!isViewModeChange}
                                 layoutId={!isViewModeChange ? `${contentType}-${item.uri}` : undefined}
-                                initial={!isTimeRangeChange && !isViewModeChange ? { opacity: 0 } : false}
+                                initial={!isTimeRangeChange && !isViewModeChange && isLoadingMore ? { opacity: 0 } : false}
                                 animate={{ opacity: 1 }}
                                 transition={{
                                     layout: { type: "spring", stiffness: 250, damping: 30 },
@@ -122,7 +122,7 @@ function CardSkeleton({ index }: { index: number }) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ layout: { type: "spring", stiffness: 350, damping: 30 }, opacity: { duration: 0.3, delay: index * 0.02, ease: "easeOut" }, scale: { duration: 0.3, delay: index * 0.02, ease: "easeOut" } }}
-            className="bg-card/50 rounded-md p-3 flex flex-col gap-2"
+            className="bg-muted-foreground/8 rounded-md p-3 flex flex-col gap-2"
         >
             <Skeleton className="w-full aspect-square rounded-[3px]" />
             <div className="space-y-2">
@@ -138,10 +138,10 @@ function ListSkeleton({ index }: { index: number }) {
         <motion.li
             layout
             layoutId={`list-skeleton-${index}`}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ layout: { type: "spring", stiffness: 350, damping: 30 }, opacity: { duration: 0.3, delay: index * 0.02, ease: "easeOut" }, x: { duration: 0.3, delay: index * 0.02, ease: "easeOut" } }}
-            className="bg-card/50 rounded-md p-3 flex items-center gap-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ layout: { type: "spring", stiffness: 350, damping: 30 }, opacity: { duration: 0.3, delay: index * 0.02, ease: "easeOut" }, scale: { duration: 0.3, delay: index * 0.02, ease: "easeOut" } }}
+            className="bg-muted-foreground/8 rounded-md p-3 flex items-center gap-4"
         >
             <Skeleton className="w-6 h-4" />
             <Skeleton className="w-12 h-12 rounded-[3px] shrink-0" />

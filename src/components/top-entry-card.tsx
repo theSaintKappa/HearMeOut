@@ -13,7 +13,7 @@ export function TopEntryCard<T extends ContentType>({ type, data, index }: TopEn
     const subtitle = type === "tracks" ? (data as Track).artists.map((artist) => artist.name).join(", ") : (data as Artist).genres.join(", ");
 
     return (
-        <button className="relative bg-card/50 size-full rounded-md border outline-none cursor-pointer group hover:bg-card focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]" type="button">
+        <button className="relative bg-muted-foreground/8 size-full rounded-md border outline-none cursor-pointer group hover:bg-muted-foreground/16 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]" type="button">
             <div className="overflow-hidden rounded-[inherit] size-full flex flex-col sm:p-4 sm:gap-4">
                 <div className="overflow-hidden rounded-[3px] bg-muted aspect-square">
                     <motion.div className="size-full" initial={{ opacity: 0 }} animate={{ opacity: isLoaded ? 1 : 0 }} transition={{ duration: 0.25 }}>
@@ -26,7 +26,7 @@ export function TopEntryCard<T extends ContentType>({ type, data, index }: TopEn
                 </div>
             </div>
             <div className="absolute sm:top-2 sm:left-2 -top-1 -left-1 bg-primary rounded-full sm:h-7 sm:min-w-7 h-6 min-w-6 px-1.75 flex items-center justify-center ring-2 sm:ring-card ring-background">
-                <span className="sm:text-sm text-xs font-black font-mono">{index + 1}</span>
+                <span className="sm:text-sm text-xs text-primary-foreground font-black font-mono">{index + 1}</span>
             </div>
         </button>
     );

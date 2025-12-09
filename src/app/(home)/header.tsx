@@ -19,10 +19,10 @@ import { cn } from "@/lib/utils";
 
 export function Header() {
     return (
-        <header className="border-b bg-card/50 h-18 shadow-[0_2px_6px_black]">
+        <header className="border-b bg-muted-foreground/8 h-18 dark:shadow-[0_2px_6px_black]">
             <div className="mx-auto max-w-7xl h-full flex items-center justify-between p-4">
                 <div className="flex items-center gap-2">
-                    <Image className="size-7" src="/HearMeOut_Logo.svg" alt="HearMeOut logo" width={32} height={32} priority />
+                    <Image className="size-7 dark:invert" src="/HearMeOut_Logo.svg" alt="HearMeOut logo" width={32} height={32} priority />
                     <h1 className="font-black text-2xl">HearMeOut</h1>
                 </div>
                 <div className="h-full flex items-center gap-2">

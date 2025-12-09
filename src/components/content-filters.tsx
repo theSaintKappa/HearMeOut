@@ -20,7 +20,7 @@ export function ContentFilters() {
                     Artists
                 </ToggleGroupItem>
             </ToggleGroup>
-            <ToggleGroup className="bg-card p-1" type="single" size="sm" value={timeRange} onValueChange={(value: TimeRange | "") => value !== "" && setTimeRange(value)}>
+            <ToggleGroup className="bg-muted-foreground/8 p-1" type="single" size="sm" value={timeRange} onValueChange={(value: TimeRange | "") => value !== "" && setTimeRange(value)}>
                 <ToggleGroupItem className="rounded-sm!" value="short_term">
                     Last 4 weeks
                 </ToggleGroupItem>
