@@ -22,13 +22,13 @@ export function ContentFilters() {
             </ToggleGroup>
             <ToggleGroup className="bg-muted-foreground/8 p-1" type="single" size="sm" value={timeRange} onValueChange={(value: TimeRange | "") => value !== "" && setTimeRange(value)}>
                 <ToggleGroupItem className="rounded-sm!" value="short_term">
-                    Last 4 weeks
+                    Last 4 Weeks
                 </ToggleGroupItem>
                 <ToggleGroupItem className="rounded-sm!" value="medium_term">
-                    Last 6 months
+                    Last 6 Months
                 </ToggleGroupItem>
                 <ToggleGroupItem className="rounded-sm!" value="long_term">
-                    Last year
+                    Last Year
                 </ToggleGroupItem>
             </ToggleGroup>
         </nav>

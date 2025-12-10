@@ -1,8 +1,9 @@
 import { headers } from "next/headers";
 import Image from "next/image";
 import { auth } from "@/lib/auth";
+import { ShareDialog } from "./me/share-dialog";
+import { UserPopover } from "./me/user-popover";
 import { SettingsPopover } from "./settings-popover";
-import { UserPopover } from "./user-popover";
 
 export async function Header() {
     const session = await auth.api.getSession({ headers: await headers() });
@@ -15,6 +16,7 @@ export async function Header() {
                     <h1 className="font-black text-2xl">HearMeOut</h1>
                 </div>
                 <div className="h-full flex items-center gap-2">
+                    {session && <ShareDialog />}
                     <SettingsPopover />
                     {session && <UserPopover />}
                 </div>

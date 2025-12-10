@@ -1,25 +1,8 @@
-import type { Artist as SpotifyArtist, Track as SpotifyTrack } from "@spotify/web-api-ts-sdk";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { AlbumType, Artist, ReleaseDatePrecision, Track } from "@/lib/types";
+import type { AlbumType, Artist, ReleaseDatePrecision, SpotifyArtist, SpotifyTrack, Track } from "@/lib/types";
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
-
-export function mapSpotifyArtist(artist: SpotifyArtist): Artist {
-    return {
-        url: artist.external_urls.spotify,
-        followers: artist.followers.total,
-        genres: artist.genres,
-        images: artist.images.map((img) => ({
-            url: img.url,
-            height: img.height ?? null,
-            width: img.width ?? null,
-        })),
-        name: artist.name,
-        popularity: artist.popularity,
-        uri: artist.uri,
-    };
-}
 
 export function mapSpotifyTrack(track: SpotifyTrack): Track {
     return {
@@ -54,3 +37,26 @@ export function mapSpotifyTrack(track: SpotifyTrack): Track {
         uri: track.uri,
     };
 }
+
+export function mapSpotifyArtist(artist: SpotifyArtist): Artist {
+    return {
+        url: artist.external_urls.spotify,
+        followers: artist.followers.total,
+        genres: artist.genres,
+        images: artist.images.map((img) => ({
+            url: img.url,
+            height: img.height ?? null,
+            width: img.width ?? null,
+        })),
+        name: artist.name,
+        popularity: artist.popularity,
+        uri: artist.uri,
+    };
+}
+
+export const fetcher = async (url: string) => {
+    console.log("Fetching", url);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`An error occurred while fetching "${url}" with SWR`, { cause: await res.json() });
+    return res.json();
+};

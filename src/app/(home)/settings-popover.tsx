@@ -19,7 +19,7 @@ export function SettingsPopover() {
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button id={`settings-trigger-${id}`} variant="outline" size="icon">
+                <Button id={`settings-trigger-${id}`} variant="outline" size="icon-sm">
                     <Settings />
                     <span className="sr-only">Settings</span>
                 </Button>

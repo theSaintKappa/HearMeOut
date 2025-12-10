@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -9,20 +8,21 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String       @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean      @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  country       String?
-  url           String?
-  uri           String?
-  followers     Int?
-  product       String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  country       String
+  url           String
+  uri           String
+  followers     Int
+  product       String
   sessions      Session[]
   accounts      Account[]
+  sharedStats   SharedStats?
 
   @@unique([email])
   @@map("user")
@@ -74,4 +74,23 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model SharedStats {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tracksShortTerm  Json
+  tracksMediumTerm Json
+  tracksLongTerm   Json
+
+  artistsShortTerm  Json
+  artistsMediumTerm Json
+  artistsLongTerm   Json
+
+  @@index([userId])
+  @@map("shared_stats")
 }

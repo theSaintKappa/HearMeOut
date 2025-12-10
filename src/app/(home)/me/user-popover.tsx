@@ -1,8 +1,8 @@
 "use client";
 
-import { AppWindowMac, BarChart3, Github, Globe, LogOut, ShieldHalf, User, Users } from "lucide-react";
+import { AppWindowMac, Github, Globe, LogOut, ShieldHalf, User, Users } from "lucide-react";
 import Link from "next/link";
-import { redirect, usePathname } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useId } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -15,13 +15,8 @@ export function UserPopover() {
     const id = useId();
     const { data: session } = authClient.useSession();
 
-    const pathname = usePathname();
-    const isOnSharePage = pathname?.startsWith("/share/");
-
     const signOut = async () => {
-        await authClient.signOut({
-            fetchOptions: { onSuccess: () => redirect("/") },
-        });
+        await authClient.signOut({ fetchOptions: { onSuccess: () => redirect("/") } });
     };
 
     const regionName = new Intl.DisplayNames(["en"], { type: "region" });
@@ -64,19 +59,6 @@ export function UserPopover() {
                         </div>
                     </div>
                     <Separator />
-                    {isOnSharePage && (
-                        <>
-                            <div className="grid p-2">
-                                <Button variant="ghost" className="justify-start font-bold" asChild>
-                                    <Link href="/me">
-                                        <BarChart3 className="size-4" />
-                                        View My Stats
-                                    </Link>
-                                </Button>
-                            </div>
-                            <Separator />
-                        </>
-                    )}
                     <div className="grid p-2">
                         <Button variant="ghost" className="justify-start" asChild>
                             <a href={session.user.uri} rel="noopener noreferrer">

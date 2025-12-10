@@ -3,29 +3,33 @@
 import { ArrowDownToLine } from "lucide-react";
 import { AnimatePresence, LayoutGroup, motion } from "motion/react";
 import { useEffect, useMemo, useRef } from "react";
-import { toast } from "sonner";
-import useSWRInfinite from "swr/infinite";
-import { useHMOStore, useSettingsStore } from "@/lib/store";
-import type { Artist, ContentType, TopItemsResponse, Track } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useSettingsStore } from "@/lib/store";
+import type { Artist, ContentType, Track } from "@/lib/types";
 import { TopEntryCard } from "./top-entry-card";
 import { TopEntryListItem } from "./top-entry-list-item";
-import { Button } from "./ui/button";
-import { Skeleton } from "./ui/skeleton";
 
-const PAGE_SIZE = 96;
+const SKELETON_COUNT = 96;
 const CONTENT_TYPE_ORDER: ContentType[] = ["tracks", "artists"];
 
-const fetcher = async (url: string) => {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`An error occurred while fetching "${url}"`, { cause: await res.json() });
-    return res.json();
-};
+export interface CollectionViewProps {
+    items: (Artist | Track)[];
+    contentType: ContentType;
+    isLoading: boolean;
+    // Pagination props (optional - for /me page)
+    pagination?: {
+        total: number;
+        hasMore: boolean;
+        isLoadingMore: boolean;
+        remainingItems: number;
+        onLoadMore: () => void;
+    };
+}
 
-export function CollectionView() {
-    const { contentType, timeRange } = useHMOStore();
+export function CollectionView({ items, contentType, isLoading, pagination }: CollectionViewProps) {
     const { viewMode } = useSettingsStore();
     const prevContentTypeRef = useRef<ContentType>(contentType);
-    const prevTimeRangeRef = useRef(timeRange);
     const prevViewModeRef = useRef(viewMode);
 
     const getSlideDirection = () => {
@@ -39,39 +43,14 @@ export function CollectionView() {
 
     if (prevContentTypeRef.current !== contentType) slideDirectionRef.current = slideDirection;
 
-    const isTimeRangeChange = prevTimeRangeRef.current !== timeRange;
     const isViewModeChange = prevViewModeRef.current !== viewMode;
 
     useEffect(() => {
         prevContentTypeRef.current = contentType;
-        prevTimeRangeRef.current = timeRange;
         prevViewModeRef.current = viewMode;
-    }, [contentType, timeRange, viewMode]);
+    }, [contentType, viewMode]);
 
-    const getKey = (pageIndex: number, previousPageData: TopItemsResponse | null) => {
-        if (previousPageData && previousPageData.nextOffset === null) return null;
-        const offset = pageIndex * PAGE_SIZE;
-        return `/api/spotify/top/${contentType}?timeRange=${timeRange}&limit=${PAGE_SIZE}&offset=${offset}`;
-    };
-
-    const { data, error, isLoading, isValidating, size, setSize } = useSWRInfinite<TopItemsResponse, Error>(getKey, fetcher, {
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false,
-        revalidateIfStale: false,
-        revalidateFirstPage: false,
-    });
-
-    const skeletonIds = useMemo(() => Array.from({ length: PAGE_SIZE }, () => `skeleton-${crypto.randomUUID()}`), []);
-
-    const allItems = data ? data.flatMap((page) => page.items as (Artist | Track)[]) : [];
-    const total = data?.[0]?.total ?? 0;
-    const hasMore = allItems.length < total;
-    const isLoadingMore = isValidating && size > 1 && data && data.length < size;
-    const remainingItems = total - allItems.length;
-
-    useEffect(() => {
-        if (error) toast.error(`Failed to load top ${contentType}`, { description: (error.cause ? (error.cause as { error: string }).error : error.message) || undefined });
-    }, [error, contentType]);
+    const skeletonIds = useMemo(() => Array.from({ length: SKELETON_COUNT }, () => `skeleton-${crypto.randomUUID()}`), []);
 
     const gridClassName = viewMode === "grid" ? "grid sm:gap-4 gap-2 sm:grid-cols-[repeat(auto-fit,minmax(185px,1fr))] grid-cols-3 list-none" : "flex flex-col gap-2 list-none";
 
@@ -82,30 +61,29 @@ export function CollectionView() {
                     {isLoading ? (
                         <AnimatePresence>{skeletonIds.map((id, index) => (viewMode === "grid" ? <CardSkeleton key={id} index={index} /> : <ListItemSkeleton key={id} index={index} />))}</AnimatePresence>
                     ) : (
-                        data &&
-                        allItems.map((item, index) => (
+                        items.map((item, index) => (
                             <motion.li
                                 key={item.uri}
                                 layout={!isViewModeChange}
                                 layoutId={!isViewModeChange ? `${contentType}-${item.uri}` : undefined}
-                                initial={!isTimeRangeChange && !isViewModeChange && isLoadingMore ? { opacity: 0 } : false}
+                                initial={pagination?.isLoadingMore ? { opacity: 0 } : false}
                                 animate={{ opacity: 1 }}
                                 transition={{
                                     layout: { type: "spring", stiffness: 250, damping: 30 },
                                     opacity: { duration: 0.2, delay: Math.min(index * 0.01, 0.3) },
                                 }}
                             >
-                                {viewMode === "grid" ? <TopEntryCard type={data[0].contentType} data={item} index={index} /> : <TopEntryListItem type={data[0].contentType} data={item} index={index} />}
+                                {viewMode === "grid" ? <TopEntryCard type={contentType} data={item} index={index} /> : <TopEntryListItem type={contentType} data={item} index={index} />}
                             </motion.li>
                         ))
                     )}
-                    {isLoadingMore && skeletonIds.map((id, index) => (viewMode === "grid" ? <CardSkeleton key={id} index={index} /> : <ListItemSkeleton key={id} index={index} />))}
+                    {pagination?.isLoadingMore && skeletonIds.map((id, index) => (viewMode === "grid" ? <CardSkeleton key={id} index={index} /> : <ListItemSkeleton key={id} index={index} />))}
                 </LayoutGroup>
-                {hasMore && !isLoadingMore && (
+                {pagination?.hasMore && !pagination.isLoadingMore && (
                     <div className="col-span-full flex justify-center py-4">
-                        <Button size="lg" onClick={() => setSize(size + 1)}>
+                        <Button size="lg" onClick={pagination.onLoadMore}>
                             <ArrowDownToLine />
-                            Load More ({remainingItems} {contentType} remaining)
+                            Load More ({pagination.remainingItems} {contentType} remaining)
                         </Button>
                     </div>
                 )}

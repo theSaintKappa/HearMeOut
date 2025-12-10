@@ -2,6 +2,7 @@ import type { Artist as SpotifyArtist, Page as SpotifyPage, Track as SpotifyTrac
 import type { SpotifyProfile } from "better-auth/social-providers";
 
 export interface SpotifyTopItemsResponse<T extends ContentType> extends SpotifyPage<T extends "artists" ? SpotifyArtist : SpotifyTrack> {}
+export type { SpotifyArtist, SpotifyTrack };
 
 type TopItemsPagination = {
     limit: number;
@@ -19,8 +20,11 @@ export interface ExtendedProfile extends SpotifyProfile {
     product: string;
 }
 
-export type ContentType = "artists" | "tracks";
-export type TimeRange = "short_term" | "medium_term" | "long_term";
+export const CONTENT_TYPES = ["tracks", "artists"] as const;
+export type ContentType = (typeof CONTENT_TYPES)[number];
+
+export const TIME_RANGES = ["short_term", "medium_term", "long_term"] as const;
+export type TimeRange = (typeof TIME_RANGES)[number];
 
 export type ViewMode = "grid" | "list";
 
@@ -78,4 +82,32 @@ export interface TopEntryProps<T extends ContentType> {
     type: T;
     data: T extends "tracks" ? Track : Artist;
     index: number;
+}
+
+export type ShareStatusResponse =
+    | {
+          hasSharedStats: true;
+          userId: string;
+          createdAt: string;
+          updatedAt: string;
+      }
+    | {
+          hasSharedStats: false;
+      };
+
+export interface SharedStatsData {
+    id: string;
+    userId: string;
+    createdAt: string;
+    updatedAt: string;
+    tracksShortTerm: Track[];
+    tracksMediumTerm: Track[];
+    tracksLongTerm: Track[];
+    artistsShortTerm: Artist[];
+    artistsMediumTerm: Artist[];
+    artistsLongTerm: Artist[];
+}
+
+export interface SharedStatsResponse {
+    sharedStats: SharedStatsData;
 }
