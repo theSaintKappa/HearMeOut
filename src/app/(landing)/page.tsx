@@ -15,7 +15,7 @@ export default async function Home() {
     if (session) redirect("/me");
 
     return (
-        <div className="h-screen supports-[height:100dvh]:h-dvh overflow-hidden flex justify-center items-center dark bg-background text-foreground text-shadow-[0_0_6px_rgb(0,0,0,1)]">
+        <div className="h-screen supports-[height:100dvh]:h-dvh overflow-hidden flex justify-center items-center dark bg-background text-foreground text-shadow-[0_0_6px_rgb(0,0,0,1)] dark violet">
             <div className="absolute size-full brightness-60">
                 <FloatingLines enabledWaves={["top", "middle", "bottom"]} lineCount={[15, 10, 15]} lineDistance={[8, 6, 4]} bendRadius={0} bendStrength={0} interactive={true} parallax={true} />
             </div>
