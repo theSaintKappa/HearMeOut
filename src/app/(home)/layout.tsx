@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import { Header } from "./header";
 
 export default function HomeLayout({ children }: { children: React.ReactNode }) {
@@ -5,6 +6,7 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
         <>
             <Header />
             {children}
+            <Toaster richColors />
         </>
     );
 }

@@ -104,8 +104,8 @@ function CardSkeleton({ index }: { index: number }) {
         >
             <Skeleton className="w-full aspect-square rounded-[3px]" />
             <div className="flex-1 flex flex-col justify-center gap-2 sm:p-0 p-2 min-h-[2lh]">
-                <Skeleton className="h-4 sm:mx-auto" style={{ width: `${((index * 7) % 41) + 40}%` }} />
-                <Skeleton className="h-3 sm:mx-auto" style={{ width: `${((index * 11) % 41) + 40}%` }} />
+                <Skeleton className="sm:h-4 h-3 sm:mx-auto" style={{ width: `${((index * 7) % 41) + 40}%` }} />
+                <Skeleton className="sm:h-3 h-2 sm:mx-auto" style={{ width: `${((index * 11) % 41) + 40}%` }} />
             </div>
         </motion.li>
     );

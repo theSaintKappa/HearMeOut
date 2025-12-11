@@ -16,12 +16,12 @@ export function TrackDialog({ track, children }: { track: Track; children: React
                 </DialogHeader>
                 <div className="space-y-4 overflow-hidden">
                     <div className="flex gap-4">
-                        <div className="size-32 rounded-md bg-secondary shadow-md overflow-hidden shrink-0">
+                        <div className="md:size-32 size-20 rounded-sm bg-secondary shadow-md overflow-hidden shrink-0">
                             <Image src={track.album.images[0].url} alt={track.name} width={640} height={640} className="object-cover size-full" />
                         </div>
                         <div className="flex flex-col justify-center min-w-0">
-                            <h2 className="truncate text-xl font-bold">{track.name}</h2>
-                            <p className="text-sm text-muted-foreground line-clamp-3">
+                            <h2 className="truncate md:text-xl text-lg font-bold">{track.name}</h2>
+                            <p className="md:text-sm text-xs text-muted-foreground md:line-clamp-3 line-clamp-2">
                                 {track.artists.flatMap((artist, index) => [
                                     index > 0 && ", ",
                                     <a key={artist.uri} className="hover:underline underline-offset-2 hover:text-foreground whitespace-nowrap" href={artist.uri}>
@@ -29,8 +29,8 @@ export function TrackDialog({ track, children }: { track: Track; children: React
                                     </a>,
                                 ])}
                             </p>
-                            <div className="text-sm text-muted-foreground flex items-center gap-1 mt-2">
-                                <Clock className="size-4" />
+                            <div className="md:text-sm text-xs text-muted-foreground flex items-center gap-1 md:mt-2 mt-1">
+                                <Clock className="md:size-4 size-3" />
                                 {formatDuration(track.durationMs)}
                             </div>
                         </div>
@@ -44,14 +44,14 @@ export function TrackDialog({ track, children }: { track: Track; children: React
                     <div className="rounded-lg bg-muted-foreground/8 p-4 space-y-3">
                         <h3 className="font-semibold capitalize">{track.album.albumType}</h3>
                         <div className="space-y-2">
-                            <p className="text-sm text-muted-foreground flex items-center gap-1">
-                                <DiscAlbum className="size-4 shrink-0" />
+                            <p className="md:text-sm text-xs text-muted-foreground flex items-center gap-1">
+                                <DiscAlbum className="md:size-4 size-3 shrink-0" />
                                 <a className="hover:underline underline-offset-2 hover:text-foreground truncate" href={track.album.uri}>
                                     {track.album.name}
                                 </a>
                             </p>
-                            <div className="text-sm text-muted-foreground flex items-center gap-1">
-                                <Users className="size-4 shrink-0" />
+                            <div className="md:text-sm text-xs text-muted-foreground flex items-center gap-1">
+                                <Users className="md:size-4 size-3 shrink-0" />
                                 <div className="line-clamp-3">
                                     {track.album.artists.flatMap((artist, index) => [
                                         index > 0 && ", ",
@@ -61,8 +61,8 @@ export function TrackDialog({ track, children }: { track: Track; children: React
                                     ])}
                                 </div>
                             </div>
-                            <div className="text-sm text-muted-foreground flex items-center gap-1">
-                                <Calendar className="size-4" />
+                            <div className="md:text-sm text-xs text-muted-foreground flex items-center gap-1">
+                                <Calendar className="md:size-4 size-3" />
                                 <p className="truncate">{formatReleaseDate(track.album.releaseDate, track.album.releaseDatePrecision)}</p>
                             </div>
                         </div>

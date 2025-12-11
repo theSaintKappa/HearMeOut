@@ -16,7 +16,7 @@ export function ArtistDialog({ artist, children }: { artist: Artist; children: R
                     <DialogDescription>Artist details window</DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 overflow-hidden">
-                    <div className="size-48 rounded-full bg-secondary shadow-md overflow-hidden mx-auto">
+                    <div className="sm:size-48 size-32 rounded-full bg-secondary shadow-md overflow-hidden mx-auto">
                         <Image src={artist.images[0].url} alt={artist.name} width={640} height={640} className="object-cover size-full" />
                     </div>
                     <div className="space-y-3 text-center">
