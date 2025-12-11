@@ -18,7 +18,6 @@ export function ShareDialog() {
 
     const { data: shareStatus, mutate } = useSWR<ShareStatusResponse>("/api/me/share", fetcher);
 
-    // TODO: change this
     const shareUrl = shareStatus?.hasSharedStats ? `${window.location.origin}/share/${shareStatus.userId}` : "";
 
     const handleGenerateLink = async () => {
@@ -27,8 +26,9 @@ export function ShareDialog() {
             const response = await fetch("/api/me/share", { method: "POST" });
             if (response.ok) {
                 const data = (await response.json()) as ShareStatusResponse;
-                mutate(data);
-                handleCopyLink();
+                if (!data.hasSharedStats) throw new Error();
+                await mutate(data);
+                await handleCopyLink(`${window.location.origin}/share/${data.userId}`);
             } else throw new Error("Failed to generate share link", { cause: await response.json() });
         } catch (error) {
             console.error(error);
@@ -44,7 +44,7 @@ export function ShareDialog() {
             const response = await fetch("/api/me/share", { method: "DELETE" });
             if (response.ok) {
                 const data = (await response.json()) as ShareStatusResponse;
-                mutate(data);
+                await mutate(data);
                 toast.success("Share link deleted successfully!");
                 setIsOpen(false);
             } else throw new Error("Failed to delete share link", { cause: await response.json() });
@@ -56,8 +56,8 @@ export function ShareDialog() {
         }
     };
 
-    const handleCopyLink = async () => {
-        await navigator.clipboard.writeText(shareUrl);
+    const handleCopyLink = async (url = shareUrl) => {
+        await navigator.clipboard.writeText(url);
         inputRef.current?.select();
         toast.success("Share link copied to clipboard!");
     };
@@ -87,7 +87,7 @@ export function ShareDialog() {
                     <div className="flex flex-col gap-4">
                         <div className="flex gap-2">
                             <Input readOnly value={shareUrl} ref={inputRef} className="select-all" />
-                            <Button variant="outline" size="icon" onClick={handleCopyLink}>
+                            <Button variant="outline" size="icon" onClick={() => handleCopyLink()}>
                                 <ClipboardCopy />
                                 <span className="sr-only">Copy Link</span>
                             </Button>
