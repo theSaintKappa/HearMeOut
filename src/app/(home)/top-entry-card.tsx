@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useState } from "react";
 import type { Artist, ContentType, TopEntryProps, Track } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { ArtistDialog } from "./artist-dialog";
+import { TrackDialog } from "./track-dialog";
 
 export function TopEntryCard<T extends ContentType>({ type, data, index }: TopEntryProps<T>) {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -12,7 +14,7 @@ export function TopEntryCard<T extends ContentType>({ type, data, index }: TopEn
     const title = data.name;
     const subtitle = type === "tracks" ? (data as Track).artists.map((artist) => artist.name).join(", ") : (data as Artist).genres.join(", ");
 
-    return (
+    const cardContent = (
         <button className="relative bg-muted-foreground/8 size-full rounded-md border outline-none cursor-pointer group hover:bg-muted-foreground/16 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]" type="button">
             <div className="overflow-hidden rounded-[inherit] size-full flex flex-col sm:p-4 sm:gap-4">
                 <div className="overflow-hidden rounded-[3px] bg-muted aspect-square">
@@ -30,4 +32,10 @@ export function TopEntryCard<T extends ContentType>({ type, data, index }: TopEn
             </div>
         </button>
     );
+
+    if (type === "tracks") {
+        return <TrackDialog track={data as Track}>{cardContent}</TrackDialog>;
+    }
+
+    return <ArtistDialog artist={data as Artist}>{cardContent}</ArtistDialog>;
 }
